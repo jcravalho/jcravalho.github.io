@@ -1,3 +1,7 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Jed Cravalho's Homepage</title>
 <!--
   hi. if you're reading the source, you're my kind of person.
@@ -227,13 +231,11 @@ body.y2k .uc { animation: blink 0.8s steps(1) infinite; }
 
   <header>
     <div class="intro">
-      <!-- EDIT ME: name + one-liner -->
       <h1>hi, I'm Jed.</h1>
-      <p>I'm a 4th year student studying computer science at University of Calgary. I like building things that real people end up using. <mark>Right now I'm looking for a Spring/Summer 2027 software engineering internship.</mark></p>
+      <p>I'm a 4th year student studying computer science at University of Calgary. I like building things that real people end up using. Right now I'm looking for a Spring/Summer 2027 software engineering internship.</p>
       <span class="note">(I wrote this site by hand. no templates. please be nice about the CSS)</span>
       <div class="links">
-        <!-- EDIT ME: put resume.pdf next to this file -->
-        <a href="files/Jed_Cravalho_Resume">resume.pdf</a>
+        <a href="files/Jed_Cravalho_Resume.pdf">resume.pdf</a>
         <a href="https://github.com/jcravalho">github</a>
         <a href="https://www.linkedin.com/in/jedcravalho/">linkedin</a>
         <span class="email"><span id="emailText">jed.cravalho@ucalgary.ca</span><button class="tiny" id="copyEmail" type="button">copy</button></span>
@@ -265,14 +267,13 @@ body.y2k .uc { animation: blink 0.8s steps(1) infinite; }
 
   <h2>things I've built</h2>
 
-  <!-- EDIT ME: your projects. lead with the numbers -->
   <div class="proj">
     <span class="note margin">money is stored as BigDecimal, never double. no rounding errors on my watch</span>
     <h3>Expense Tracker</h3>
-    <div class="meta">Java 17 · REST API · zero dependencies · 2026</div>
-    <p>A REST API for tracking spending, written in plain Java with <mark>no external libraries at all</mark>. I used the JDK's built-in HTTP server and wrote my own small JSON parser. Expenses save to a CSV file with atomic writes, so a crash halfway through a save can't corrupt your data.</p>
-    <p>It also has a web page built entirely in Java with no JavaScript, just HTML forms. It uses the Post/Redirect/Get pattern so refreshing doesn't add the same expense twice, and it escapes user input so nobody can inject code. It has filters by category and date, monthly summaries, and a test suite.</p>
-    <p>Each layer only talks to the one below it, so features like automatic categorization and spending analytics can be added without reworking existing code.</p>
+    <div class="meta">Java 17 · JavaFX · REST API · SceneBuilder · 2026</div>
+    <p>A spending tracker with three ways in: a REST API, a web page, and a JavaFX desktop app. The core is plain Java with <mark>no external libraries at all</mark>. I used the JDK's built-in HTTP server and wrote my own small JSON parser. Expenses save to a CSV file with atomic writes, so a crash halfway through a save can't corrupt your data.</p>
+    <p>The web page is built entirely in Java with no JavaScript, just HTML forms. It uses the Post/Redirect/Get pattern so refreshing doesn't add the same expense twice, and it escapes user input so nobody can inject code. It has filters by category and date, monthly summaries, and a test suite.</p>
+    <p>The desktop app has a table of expenses, filters, and a pie chart of spending by category. I laid it out in SceneBuilder. Each layer only talks to the one below it, so <mark>the desktop app plugged into the existing code without changing a single line of it</mark>.</p>
     <span class="brk">[<a href="https://github.com/jcravalho/expense-tracker">code</a>]</span>
   </div>
 
@@ -313,10 +314,8 @@ body.y2k .uc { animation: blink 0.8s steps(1) infinite; }
       <td>2023–now</td>
       <td><b>Footwear Lead</b>, Under Armour, Rocky View AB<br>I sell shoes to people in order to pay off my student loans. Along the way:
         <ul>
-          <li>Lead a team of 10 associates. Better stockroom organization made the department <b>15% more efficient</b> and cut restock time.</li>
+          <li>Lead a team of 8 associates. Better stockroom organization made the department <b>15% more efficient</b> and cut restock time.</li>
           <li><mark>Top footwear sales in the region for 7 months in a row</mark>, from studying sales trends and rearranging the floor layout to match.</li>
-          <li>Train new associates on inventory systems and sales procedures. Onboarding is now <b>20% faster</b>.</li>
-          <li>Brought new sales and customer service practices to the whole store, projected to raise annual sales 10%.</li>
         </ul>
       </td>
     </tr>
@@ -327,8 +326,8 @@ body.y2k .uc { animation: blink 0.8s steps(1) infinite; }
     <li><b>Comfortable:</b> Java, Python, C, SQL, Git, Linux, Docker</li>
     <li><b>Security &amp; networking:</b> socket programming, client-server architecture, cryptographic hashing and MACs, block cipher modes (CBC, CTR), POSIX file permissions, authentication systems, secure coding</li>
     <li><b>Also used:</b> JavaFX, Keras</li>
-    <li><b>Getting there:</b> JavaScript, TypeScript, AWS</li>
-    <li><b>Learning:</b> Machine Learning (it's going okay), Tagalog (it's going less okay)</li>
+    <li><b>Getting there:</b> TypeScript, AWS, Rust</li>
+    <li><b>Learning:</b> Machine Learning (it's going okay), JavaScript (it's going less okay)</li>
   </ul>
 
   <h2>site changelog</h2>
