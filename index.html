@@ -1,38 +1,548 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>HTML preview</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 32px;
-      background: #f5f2ed;
-      color: #24201d;
-      font-family: system-ui, sans-serif;
+<title>Jed Cravalho's Homepage</title>
+<!--
+  hi. if you're reading the source, you're my kind of person.
+  there are 6 secrets on this page. one of them is ↑ ↑ ↓ ↓ ← → ← → b a
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* layout: one hand-coded column on engineering graph paper, red-pen notes in the margin */
+:root {
+  --paper: #fbfaf5;
+  --grid: #e4e9f1;
+  --ink: #1f2330;
+  --muted: #5b6273;
+  --link: #1f4fd1;
+  --visited: #6b3fa0;
+  --pen: #c4352b;
+  --hl: #fff07a;
+  --hl-ink: #1f2330;
+  --rule: #c9cfdb;
+  --term-bg: #12141a;
+  --term-fg: #cfeccf;
+  --term-dim: #7f9a7f;
+
+  --serif: Georgia, "Times New Roman", Times, serif;
+  --hand: "Gochi Hand", "Comic Sans MS", "Segoe Print", cursive;
+  --mono: "JetBrains Mono", ui-monospace, Consolas, "Courier New", monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #191b21; --grid: #22252d; --ink: #e7e5dd; --muted: #9ba0ac;
+    --link: #8fb0ff; --visited: #c49cf0; --pen: #ff7d6e; --hl: #5a5016;
+    --hl-ink: #fff7c4; --rule: #3a3e49; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #191b21; --grid: #22252d; --ink: #e7e5dd; --muted: #9ba0ac;
+  --link: #8fb0ff; --visited: #c49cf0; --pen: #ff7d6e; --hl: #5a5016;
+  --hl-ink: #fff7c4; --rule: #3a3e49; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { background: var(--paper); }
+body {
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 22px 22px;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.075rem;
+  line-height: 1.6;
+  padding-inline: 16px;
+  padding-block: 40px 60px;
+}
+::selection { background: var(--hl); color: var(--hl-ink); }
+
+.page { max-width: 660px; margin: 0 auto; position: relative; }
+
+a { color: var(--link); }
+a:visited { color: var(--visited); }
+a:hover { text-decoration-style: wavy; }
+:focus-visible { outline: 2px dashed var(--pen); outline-offset: 3px; }
+
+h1 { font-size: 2.6rem; line-height: 1.1; margin: 0 0 6px; text-wrap: balance; }
+h2 {
+  font-size: 1.35rem; margin: 44px 0 10px; text-wrap: balance;
+  border-bottom: 1px solid var(--rule); padding-bottom: 4px;
+}
+h3 { font-size: 1.08rem; margin: 0; }
+p { margin: 0 0 12px; }
+ul { margin: 0 0 12px; padding-left: 22px; }
+li { margin-bottom: 4px; }
+
+mark {
+  color: var(--hl-ink);
+  background: linear-gradient(100deg, transparent 2%, var(--hl) 4%, var(--hl) 94%, transparent 97%);
+  padding: 0 3px;
+}
+code, .mono { font-family: var(--mono); font-size: 0.86em; }
+
+/* red pen notes */
+.note {
+  font-family: var(--hand);
+  color: var(--pen);
+  font-size: 1.15rem;
+  line-height: 1.25;
+  display: block;
+  margin: 2px 0 12px;
+  transform: rotate(-1.5deg);
+}
+@media (min-width: 1080px) {
+  .note.margin {
+    position: absolute; right: -235px; width: 200px; margin: 0;
+    transform: rotate(2deg);
+  }
+  .note.margin::before { content: "← "; }
+}
+
+/* header */
+header { display: flex; gap: 22px; align-items: flex-start; flex-wrap: wrap; }
+header .intro { flex: 1 1 300px; min-width: 0; }
+.doodle {
+  flex: 0 0 auto; width: 120px; cursor: pointer; background: none; border: 0;
+  padding: 0; color: var(--ink); position: relative;
+}
+.doodle svg { width: 120px; height: 120px; display: block; }
+.doodle svg * { fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.doodle .cheek { fill: var(--pen); stroke: none; opacity: .35; }
+.bubble {
+  position: absolute; top: -14px; left: 96px; white-space: nowrap;
+  font-family: var(--hand); font-size: 1.05rem; color: var(--pen);
+  background: var(--paper); border: 1.5px solid var(--pen); border-radius: 12px 12px 12px 2px;
+  padding: 0 8px;
+}
+.links { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 10px; font-family: var(--mono); font-size: .9rem; }
+.email { display: inline-flex; gap: 6px; align-items: center; }
+button.tiny {
+  font-family: var(--mono); font-size: .75rem; cursor: pointer;
+  background: var(--paper); color: var(--ink); border: 1px solid var(--rule);
+  padding: 1px 6px; border-radius: 3px;
+}
+button.tiny:hover { border-color: var(--ink); }
+
+/* currently */
+dl.now { display: grid; grid-template-columns: max-content 1fr; gap: 4px 16px; margin: 0; }
+dl.now dt { font-family: var(--mono); font-size: .82rem; color: var(--muted); padding-top: 4px; }
+dl.now dd { margin: 0; min-width: 0; }
+.status-dot {
+  display: inline-block; width: 9px; height: 9px; border-radius: 50%;
+  background: #2e9a4f; margin-right: 6px; vertical-align: 1px;
+  animation: blink 2.4s infinite;
+}
+@keyframes blink { 50% { opacity: .25; } }
+
+/* projects */
+.proj { margin: 0 0 26px; position: relative; }
+.proj .meta { font-family: var(--mono); font-size: .8rem; color: var(--muted); margin: 2px 0 6px; }
+.proj .brk { font-family: var(--mono); font-size: .85rem; }
+.proj p { margin-bottom: 6px; }
+
+/* experience */
+.xp { width: 100%; border-collapse: collapse; }
+.xp td { vertical-align: top; padding: 6px 0; border-bottom: 1px dotted var(--rule); }
+.xp td:first-child { font-family: var(--mono); font-size: .8rem; color: var(--muted); width: 120px; padding-right: 14px; padding-top: 9px; font-variant-numeric: tabular-nums; }
+@media (max-width: 480px) {
+  .xp td { display: block; border: 0; padding: 0; width: auto !important; }
+  .xp tr { display: block; border-bottom: 1px dotted var(--rule); padding: 8px 0; }
+}
+
+.changelog { font-family: var(--mono); font-size: .85rem; list-style: none; padding: 0; }
+.changelog b { font-weight: 600; }
+
+footer {
+  margin-top: 54px; padding-top: 14px; border-top: 1px solid var(--rule);
+  font-family: var(--mono); font-size: .78rem; color: var(--muted);
+  display: grid; gap: 6px;
+}
+.counter {
+  font-variant-numeric: tabular-nums; background: #000; color: #3f3;
+  padding: 0 5px; letter-spacing: 2px; border: 2px inset #888;
+}
+#secrets b { color: var(--pen); }
+
+/* toast */
+#toast {
+  position: fixed; left: 50%; bottom: calc(22px + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%); max-width: calc(100% - 32px);
+  background: var(--ink); color: var(--paper); font-family: var(--mono); font-size: .85rem;
+  padding: 8px 14px; border-radius: 4px; z-index: 50; box-shadow: 3px 3px 0 var(--pen);
+}
+
+/* terminal */
+#term {
+  position: fixed; inset: 0; z-index: 40; display: grid; place-items: center;
+  background: rgb(0 0 0 / .45); padding: 16px;
+}
+.term-win {
+  width: min(680px, 100%); height: min(440px, 80vh); display: flex; flex-direction: column;
+  background: var(--term-bg); color: var(--term-fg); font-family: var(--mono); font-size: .85rem;
+  border: 1px solid #444; box-shadow: 6px 6px 0 rgb(0 0 0 / .35);
+}
+.term-bar { display: flex; justify-content: space-between; align-items: center; padding: 4px 10px; background: #2a2d36; color: #bbb; font-size: .75rem; }
+.term-bar button { background: none; border: 0; color: #bbb; cursor: pointer; font: inherit; }
+#termOut { flex: 1; overflow-y: auto; padding: 10px 12px; white-space: pre-wrap; word-break: break-word; }
+#termOut .dim { color: var(--term-dim); }
+#termOut a { color: #9fd0ff; }
+#termForm { display: flex; gap: 8px; padding: 8px 12px; border-top: 1px solid #2a2d36; }
+#termIn { flex: 1; min-width: 0; background: transparent; border: 0; color: var(--term-fg); font: inherit; outline: none; caret-color: var(--term-fg); }
+
+/* ===== 1999 mode (konami) ===== */
+#y2k { display: none; }
+body.y2k {
+  font-family: "Comic Sans MS", "Comic Neue", var(--hand);
+  background-color: #000080;
+  background-image: radial-gradient(#ffffff 1px, transparent 1.5px), radial-gradient(#ffff66 1px, transparent 1.5px);
+  background-size: 40px 40px, 64px 64px;
+  background-position: 0 0, 20px 30px;
+  color: #ffff66;
+}
+body.y2k .page { background: #000; border: 6px ridge #c0c0c0; padding: 18px; }
+body.y2k h1 { color: #ff66ff; text-shadow: 3px 3px #00ffff; }
+body.y2k h2 { color: #66ff66; border-color: #ff66ff; }
+body.y2k a, body.y2k a:visited { color: #00ffff; }
+body.y2k mark { background: #ff00ff; color: #fff; }
+body.y2k .note { color: #ff9966; }
+body.y2k .doodle, body.y2k .xp td:first-child, body.y2k .proj .meta, body.y2k dl.now dt, body.y2k footer { color: #c0c0c0; }
+body.y2k #y2k { display: block; background: #ff0; color: #f00; font-weight: bold; margin-bottom: 14px; border: 2px dashed #f00; }
+body.y2k .uc { animation: blink 0.8s steps(1) infinite; }
+.sparkle { position: fixed; pointer-events: none; z-index: 60; color: #ff0; font-size: 14px; animation: fall .9s linear forwards; }
+@keyframes fall { to { transform: translateY(40px) rotate(180deg); opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+
+<div class="page">
+
+  <div id="y2k">
+    <marquee scrollamount="6">★ WELCOME 2 MY HOMEPAGE ★ U R VISITOR NUMBER WHO KNOWS ★ SIGN MY GUESTBOOK (it doesn't exist) ★ <span class="uc">UNDER CONSTRUCTION</span> ★</marquee>
+  </div>
+
+  <header>
+    <div class="intro">
+      <!-- EDIT ME: name + one-liner -->
+      <h1>hi, I'm Jed.</h1>
+      <p>I'm a 4th year student studying computer science at University of Calgary. I like building things that real people end up using. <mark>Right now I'm looking for a Spring/Summer 2027 software engineering internship.</mark></p>
+      <span class="note">(I wrote this site by hand. no templates. please be nice about the CSS)</span>
+      <div class="links">
+        <!-- EDIT ME: put resume.pdf next to this file -->
+        <a href="files/Jed_Cravalho_Resume">resume.pdf</a>
+        <a href="https://github.com/jcravalho">github</a>
+        <a href="https://www.linkedin.com/in/jedcravalho/">linkedin</a>
+        <span class="email"><span id="emailText">jed.cravalho@ucalgary.ca</span><button class="tiny" id="copyEmail" type="button">copy</button></span>
+      </div>
+    </div>
+    <button class="doodle" id="doodle" type="button" aria-label="a doodle of me. try poking it">
+      <span class="bubble" id="bubble" hidden></span>
+      <svg viewBox="0 0 120 120" aria-hidden="true">
+        <path d="M60 14c24 1 44 19 43 45s-19 46-45 45S15 85 16 58 35 13 60 14z"/>
+        <path d="M30 34c8-14 30-20 44-14 10 4 18 10 22 20" />
+        <path id="eyeL" d="M44 52v6"/>
+        <path id="eyeR" d="M74 51v6"/>
+        <path id="mouth" d="M44 76c8 8 22 8 32-1"/>
+        <circle class="cheek" cx="36" cy="68" r="6"/>
+        <circle class="cheek" cx="84" cy="67" r="6"/>
+      </svg>
+    </button>
+  </header>
+
+  <h2>currently</h2>
+  <dl class="now">
+    <dt>status</dt><dd><span class="status-dot" aria-hidden="true"></span>open to internships (SWE / cybersecurity / frontend / backend)</dd>
+    <dt>building</dt><dd>Forkast, a web app that decides what you should finally eat in a food court (Calgary Area Only)</dd>
+    <dt>school</dt><dd>BSc Computer Science, University of Calgary, graduating Dec 2028 · <b>3.83 GPA</b> · Jason Lang Scholarship (2x)</dd>
+    <dt>classes</dt><dd>Artificial Intelligence, Computer Security</dd>
+    <dt>reading</dt><dd><i>East of Eden</i>, chapter 2 of 55</dd>
+    <dt>coffee</dt><dd><span id="coffee" class="mono">37</span> cups since I started this site <button class="tiny" id="coffeeBtn" type="button">+1</button></dd>
+  </dl>
+
+  <h2>things I've built</h2>
+
+  <!-- EDIT ME: your projects. lead with the numbers -->
+  <div class="proj">
+    <span class="note margin">money is stored as BigDecimal, never double. no rounding errors on my watch</span>
+    <h3>Expense Tracker</h3>
+    <div class="meta">Java 17 · REST API · zero dependencies · 2026</div>
+    <p>A REST API for tracking spending, written in plain Java with <mark>no external libraries at all</mark>. I used the JDK's built-in HTTP server and wrote my own small JSON parser. Expenses save to a CSV file with atomic writes, so a crash halfway through a save can't corrupt your data.</p>
+    <p>It also has a web page built entirely in Java with no JavaScript, just HTML forms. It uses the Post/Redirect/Get pattern so refreshing doesn't add the same expense twice, and it escapes user input so nobody can inject code. It has filters by category and date, monthly summaries, and a test suite.</p>
+    <p>Each layer only talks to the one below it, so features like automatic categorization and spending analytics can be added without reworking existing code.</p>
+    <span class="brk">[<a href="https://github.com/jcravalho/expense-tracker">code</a>]</span>
+  </div>
+
+  <div class="proj">
+    <h3>OMG Gaming Platform</h3>
+    <div class="meta">Java · sockets · client-server · Mar–Apr 2025</div>
+    <p>A multiplayer board game platform where several players connect to one host server and play together live. <mark>I built the networking layer</mark>, using sockets and client-server messages to keep everyone connected and in sync for the whole game.</p>
+  </div>
+
+  <div class="proj">
+    <span class="note margin">-rw-r--r-- is now a language I speak fluently</span>
+    <h3>POSIX Permissions Access Resolver</h3>
+    <div class="meta">Python · Linux security · Oct 2026</div>
+    <p>A Python tool that answers one question: can this user open this file? It checks the owner, group and other permission bits the same way Linux does when it decides whether to allow access.</p>
+  </div>
+
+  <div class="proj">
+    <span class="note margin">built because my friends and I spend 20 minutes deciding every single time</span>
+    <h3>Forkast <span class="mono" style="color:var(--pen)">in progress</span></h3>
+    <div class="meta">web app · Calgary only (for now) · 2026</div>
+    <p>A web app that decides what you should finally eat when you're standing in a food court. It only covers Calgary for now.</p>
+    <span class="brk">[coming soon]</span>
+  </div>
+
+  <div class="proj">
+    <h3>??? <span class="mono" style="color:var(--pen)">Ventures Hackathon 2026</span></h3>
+    <div class="meta">upcoming · stack TBD · sleep also TBD</div>
+    <p>I'm competing at Ventures Hackathon 2026. I'll post whatever I build here afterward, bugs included.</p>
+  </div>
+
+  <h2>experience</h2>
+  <table class="xp">
+    <tr>
+      <td>2025–now</td>
+      <td><b>Club Member</b>, The Cybersecurity Club<br>I attend club meetings when I can. Hoping to make more friends.</td>
+    </tr>
+    <tr>
+      <td>2023–now</td>
+      <td><b>Footwear Lead</b>, Under Armour, Rocky View AB<br>I sell shoes to people in order to pay off my student loans. Along the way:
+        <ul>
+          <li>Lead a team of 10 associates. Better stockroom organization made the department <b>15% more efficient</b> and cut restock time.</li>
+          <li><mark>Top footwear sales in the region for 7 months in a row</mark>, from studying sales trends and rearranging the floor layout to match.</li>
+          <li>Train new associates on inventory systems and sales procedures. Onboarding is now <b>20% faster</b>.</li>
+          <li>Brought new sales and customer service practices to the whole store, projected to raise annual sales 10%.</li>
+        </ul>
+      </td>
+    </tr>
+  </table>
+
+  <h2>skills, honestly</h2>
+  <ul>
+    <li><b>Comfortable:</b> Java, Python, C, SQL, Git, Linux, Docker</li>
+    <li><b>Security &amp; networking:</b> socket programming, client-server architecture, cryptographic hashing and MACs, block cipher modes (CBC, CTR), POSIX file permissions, authentication systems, secure coding</li>
+    <li><b>Also used:</b> JavaFX, Keras</li>
+    <li><b>Getting there:</b> JavaScript, TypeScript, AWS</li>
+    <li><b>Learning:</b> Machine Learning (it's going okay), Tagalog (it's going less okay)</li>
+  </ul>
+
+  <h2>site changelog</h2>
+  <ul class="changelog">
+    <li><b>v0.4</b> added some secrets. don't tell anyone.</li>
+    <li><b>v0.3</b> dark mode, because my friend said my site "burned his eyes" at 2am</li>
+    <li><b>v0.2</b> learned what flexbox is. redid everything.</li>
+    <li><b>v0.1</b> it's alive. it's ugly. it's mine.</li>
+  </ul>
+
+  <footer>
+    <div>you are visitor <span class="counter" id="counter">000000</span> <span title="there is no backend. this number is made up. I'm a student.">(?)</span></div>
+    <div>last updated oct 25 2026, 2:47am · best viewed on any screen · <button class="tiny" id="lights" type="button">lights</button></div>
+    <div id="secrets">psst. there are 6 secrets on this page. found: <b id="found">0</b>/6</div>
+  </footer>
+</div>
+
+<div id="toast" role="status" aria-live="polite" hidden></div>
+
+<div id="term" hidden role="dialog" aria-label="terminal">
+  <div class="term-win">
+    <div class="term-bar"><span>jed@homepage: ~</span><button id="termClose" type="button" aria-label="close terminal">[x]</button></div>
+    <div id="termOut"></div>
+    <form id="termForm" autocomplete="off"><span>$</span><input id="termIn" aria-label="terminal input" spellcheck="false"></form>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var store = {
+    get: function (k, d) { try { var v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
+    set: function (k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  };
+
+  // ---------- toast ----------
+  var toastTimer;
+  function toast(msg) {
+    var t = $("toast"); t.textContent = msg; t.hidden = false;
+    clearTimeout(toastTimer); toastTimer = setTimeout(function () { t.hidden = true; }, 3200);
+  }
+
+  // ---------- secrets tracker ----------
+  var SECRETS = ["terminal", "konami", "hire", "doodle", "sudo", "console"];
+  var found = store.get("jl-secrets", []);
+  function renderFound() {
+    $("found").textContent = found.length;
+    if (found.length === SECRETS.length) {
+      $("secrets").innerHTML = "you found all 6 secrets. you're hired. wait, that's backwards. <b>email me</b>.";
     }
-    article {
-      width: min(560px, 100%);
-      padding: 32px;
-      border: 1px solid #ded7cf;
-      border-radius: 18px;
-      background: white;
-      box-shadow: 0 18px 60px rgba(55, 42, 30, .12);
+  }
+  function unlock(name, msg) {
+    if (found.indexOf(name) === -1) {
+      found.push(name); store.set("jl-secrets", found); renderFound();
+      toast("secret found (" + found.length + "/6): " + msg);
     }
-    span { color: #d94716; font-weight: 700; letter-spacing: .08em; }
-    h1 { margin: 12px 0; font-size: clamp(2rem, 6vw, 3.5rem); line-height: 1; }
-    p { margin: 0; color: #665f58; line-height: 1.65; }
-  </style>
-</head>
-<body>
-  <article>
-    <h1>Hello!</h1>
-    <p>Welcome to my website.</p>
-  </article>
-</body>
-</html>
+  }
+  renderFound();
+
+  // ---------- copy email ----------
+  $("copyEmail").addEventListener("click", function () {
+    var email = $("emailText").textContent;
+    var done = function () { toast("copied " + email); };
+    var fallback = function () {
+      var r = document.createRange(); r.selectNodeContents($("emailText"));
+      var s = getSelection(); s.removeAllRanges(); s.addRange(r);
+      toast("selected it. ctrl+c to copy");
+    };
+    try { navigator.clipboard.writeText(email).then(done, fallback); } catch (e) { fallback(); }
+  });
+
+  // ---------- coffee ----------
+  var coffee = 37 + store.get("jl-coffee", 0);
+  $("coffee").textContent = coffee;
+  $("coffeeBtn").addEventListener("click", function () {
+    coffee++; store.set("jl-coffee", coffee - 37); $("coffee").textContent = coffee;
+    if (coffee === 50) toast("50 cups. please stop. my hands are shaking");
+  });
+
+  // ---------- fake visitor counter ----------
+  var visits = store.get("jl-visits", 0) + 1; store.set("jl-visits", visits);
+  $("counter").textContent = String(4180 + visits * 3).padStart(6, "0");
+
+  // ---------- lights ----------
+  function toggleTheme() {
+    var root = document.documentElement;
+    var dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+    root.dataset.theme = dark ? "light" : "dark";
+    return root.dataset.theme;
+  }
+  $("lights").addEventListener("click", toggleTheme);
+
+  // ---------- doodle poking ----------
+  var pokes = 0;
+  var lines = ["hi!", "hey", "ow", "please", "ok STOP", "x_x", "...fine. you win"];
+  $("doodle").addEventListener("click", function () {
+    var b = $("bubble");
+    b.textContent = lines[Math.min(pokes, lines.length - 1)]; b.hidden = false;
+    pokes++;
+    if (pokes === 6) {
+      $("eyeL").setAttribute("d", "M40 50l8 8M48 50l-8 8");
+      $("eyeR").setAttribute("d", "M70 49l8 8M78 49l-8 8");
+      $("mouth").setAttribute("d", "M46 80c8-6 20-6 28 0");
+      unlock("doodle", "you poked me to death");
+    }
+  });
+
+  // ---------- konami / typed words ----------
+  var KONAMI = ["arrowup","arrowup","arrowdown","arrowdown","arrowleft","arrowright","arrowleft","arrowright","b","a"];
+  var keys = [], typed = "";
+  document.addEventListener("keydown", function (e) {
+    if (e.target.closest && e.target.closest("input, textarea")) return;
+    var k = e.key.toLowerCase();
+    if (k === "`" || k === "~") { e.preventDefault(); openTerm(); return; }
+    keys.push(k); keys = keys.slice(-10);
+    if (keys.join() === KONAMI.join()) { y2k(); keys = []; }
+    if (k.length === 1) {
+      typed = (typed + k).slice(-12);
+      if (/hire$/.test(typed)) { toast("ok ok. jed.cravalho@ucalgary.ca. I start whenever you want."); unlock("hire", "you typed the magic word"); }
+    }
+  });
+
+  var sparkle = false;
+  function y2k() {
+    var on = document.body.classList.toggle("y2k");
+    sparkle = on && !matchMedia("(prefers-reduced-motion: reduce)").matches;
+    toast(on ? "welcome to 1999. konami again to escape" : "back to the present. it's less fun here");
+    unlock("konami", "1999 mode");
+  }
+  var lastSpark = 0;
+  document.addEventListener("pointermove", function (e) {
+    if (!sparkle || e.timeStamp - lastSpark < 40) return;
+    lastSpark = e.timeStamp;
+    var s = document.createElement("span");
+    s.className = "sparkle"; s.textContent = "*";
+    s.style.left = e.clientX + "px"; s.style.top = e.clientY + "px";
+    document.body.appendChild(s);
+    setTimeout(function () { s.remove(); }, 900);
+  });
+
+  // ---------- terminal ----------
+  var out = $("termOut"), input = $("termIn"), hist = [], hi = 0, booted = false;
+  function print(text, cls) {
+    var d = document.createElement("div");
+    if (cls) d.className = cls;
+    d.textContent = text; out.appendChild(d); out.scrollTop = out.scrollHeight;
+    return d;
+  }
+  function openTerm() {
+    $("term").hidden = false; input.focus();
+    if (!booted) {
+      booted = true;
+      print("jedOS v0.4 (not a real OS)", "dim");
+      print("type 'help' to see what you can do.\n", "dim");
+    }
+    unlock("terminal", "the backtick terminal");
+  }
+  function closeTerm() { $("term").hidden = true; }
+  $("termClose").addEventListener("click", closeTerm);
+  $("term").addEventListener("click", function (e) { if (e.target === $("term")) closeTerm(); });
+  $("term").addEventListener("keydown", function (e) { if (e.key === "Escape") closeTerm(); });
+
+  var FILES = {
+    "about.txt": "cs student @ university of calgary.\nlikes: backends, cybersec, good error messages.\ndislikes: flaky tests, popcorn (lying, I love popcorn).",
+    "projects.txt": "omg-gaming        multiplayer, sockets, java\nposix-resolver    can you open this file? python decides\nexpense-tracker   0 weekly users\nforkast          0 weekly users\n<upcoming hackathon project>         Ventures Hackathon 2026",
+    "resume.txt": "the real one is resume.pdf on the main page.\nthe short version: I ship things and I write about the bugs.",
+    ".secret": "there's nothing here. or is there. (try 'sudo hire-me')"
+  };
+  var CMDS = {
+    help: function () { return "commands:\n  whoami     ls       cat <file>\n  contact    theme    coffee\n  clear      exit     sudo ???\n  (also try things. some stuff is hidden)"; },
+    whoami: function () { return "you're a visitor. I'm jed. nice to meet you."; },
+    ls: function (a) { return a === "-a" || a === "-la" ? Object.keys(FILES).join("   ") : Object.keys(FILES).filter(function (f) { return f[0] !== "."; }).join("   "); },
+    cat: function (a) { return a ? (FILES[a] || "cat: " + a + ": no such file (try 'ls')") : "cat: which file? (try 'ls')"; },
+    contact: function () { return "email:    jed.cravalho@ucalgary.ca\ngithub:   github.com/jcravalho\nlinkedin: linkedin.com/in/jedcravalho/"; },
+    theme: function () { return "switched to " + toggleTheme() + " mode"; },
+    coffee: function () { $("coffeeBtn").click(); return "brewing... done. cup #" + coffee + "."; },
+    clear: function () { out.textContent = ""; return null; },
+    exit: function () { closeTerm(); return null; },
+    pwd: function () { return "/home/jed/probably-should-be-studying"; },
+    date: function () { return new Date().toString() + "\n(should I be asleep? probably)"; },
+    vim: function () { return "you are now trapped in vim forever. (kidding. type 'exit')"; },
+    hello: function () { return "hi :)"; },
+    sudo: function (a) {
+      if (/^hire(-me)?$/.test(a)) {
+        unlock("sudo", "root access to my career");
+        return "[sudo] password for recruiter: ********\naccess granted.\n\n  >> sending offer letter...\n  >> just kidding. but my email is jed.cravalho@ucalgary.ca\n  >> and I really would love to chat.";
+      }
+      if (/^rm -rf/.test(a)) return "nice try. this site has no backend to destroy. I checked.";
+      return "jed is not in the sudoers file. this incident will be reported (to nobody).";
+    },
+    rm: function () { return "rm: permission denied. I worked hard on this."; }
+  };
+  $("termForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var raw = input.value.trim(); input.value = "";
+    print("$ " + raw);
+    if (!raw) return;
+    hist.push(raw); hi = hist.length;
+    var parts = raw.split(/\s+/), cmd = parts[0].toLowerCase(), arg = parts.slice(1).join(" ");
+    var fn = CMDS[cmd];
+    var res = fn ? fn(arg) : cmd + ": command not found. try 'help'";
+    if (res !== null) print(res + "\n", fn ? "" : "dim");
+  });
+  input.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowUp" && hi > 0) { hi--; input.value = hist[hi]; e.preventDefault(); }
+    if (e.key === "ArrowDown") { hi = Math.min(hist.length, hi + 1); input.value = hist[hi] || ""; e.preventDefault(); }
+  });
+
+  // ---------- for the people who open devtools ----------
+  window.hireMe = function () {
+    unlock("console", "you found the console function");
+    return "you opened devtools AND ran a function. we'd get along. jed.cravalho@ucalgary.ca";
+  };
+  console.log("%chey, you opened the console.", "font: bold 16px Georgia; color: #c4352b");
+  console.log("%cthat's the kind of curiosity I like. type hireMe() and press enter.", "font: 13px monospace");
+})();
+</script>
